@@ -1,5 +1,6 @@
+const path = require('path');
 const dotenv = require('dotenv');
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, '../.env') });
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -13,9 +14,25 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB Connection
-mongoose.connect('mongodb://localhost:27017/taskmanager')
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('MongoDB connection error:', err));
+
+// Add this before starting the server
+mongoose.connection.on('error', (err) => {
+    console.error('MongoDB connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+    console.log('MongoDB disconnected');
+});
+
+mongoose.connection.on('connected', () => {
+    console.log('MongoDB connected');
+});
 
 // Routes
 // Get all tasks
@@ -63,7 +80,7 @@ app.delete('/api/tasks/:id', async (req, res) => {
     try {
         const task = await Task.findById(req.params.id);
         if (task) {
-            await task.remove();
+            await Task.deleteOne({ _id: task._id });
             res.json({ message: 'Task deleted' });
         } else {
             res.status(404).json({ message: 'Task not found' });
