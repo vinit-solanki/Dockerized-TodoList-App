@@ -1,6 +1,6 @@
-# Dockerized MERN Task Manager
+# Dockerized MERN Task List
 
-This repository contains a containerized version of a Task Manager application built with the MERN stack (MongoDB, Express, React, Node.js).
+This repository contains a containerized version of a Task List application built with the MERN stack (MongoDB, Express, React, Node.js).
 
 ## Project Structure
 
