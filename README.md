@@ -26,7 +26,7 @@ This repository contains a containerized version of a Task List application buil
 ### 1. Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/vinit-solanki/Dockerized-TodoList-App.git
 cd task-manager
 ```
 
@@ -47,7 +47,7 @@ This command will:
 
 Open your browser and navigate to:
 ```
-http://localhost
+http://localhost:80
 ```
 
 ### 4. Stop the application
@@ -66,6 +66,7 @@ docker-compose down -v
 ### MongoDB
 - Image: mongo:latest
 - Port: 27017 (exposed to host)
+- But, done with MongoDB Atlas with this application
 - Data persistence: Using Docker volume (`mongo_data`)
 
 ### Server (Node.js/Express)
